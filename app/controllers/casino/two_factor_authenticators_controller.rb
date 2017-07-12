@@ -8,15 +8,15 @@ class CASino::TwoFactorAuthenticatorsController < CASino::ApplicationController
   before_action :ensure_signed_in
 
   def new
-    @two_factor_authenticator = current_user.two_factor_authenticators.create! secret: ROTP::Base32.random_base32
+    @two_factor_authenticator = casino_current_user.two_factor_authenticators.create! secret: ROTP::Base32.random_base32
   end
 
   def create
-    @two_factor_authenticator = current_user.two_factor_authenticators.where(id: params[:id]).first
+    @two_factor_authenticator = casino_current_user.two_factor_authenticators.where(id: params[:id]).first
     validation_result = validate_one_time_password(params[:otp], @two_factor_authenticator)
     case
     when validation_result.success?
-      current_user.two_factor_authenticators.where(active: true).delete_all
+      casino_current_user.two_factor_authenticators.where(active: true).delete_all
       @two_factor_authenticator.update_attribute(:active, true)
       flash[:notice] = I18n.t('two_factor_authenticators.successfully_activated')
       redirect_to sessions_path
@@ -30,7 +30,7 @@ class CASino::TwoFactorAuthenticatorsController < CASino::ApplicationController
   end
 
   def destroy
-    authenticators = current_user.two_factor_authenticators.where(id: params[:id])
+    authenticators = casino_current_user.two_factor_authenticators.where(id: params[:id])
     if authenticators.any?
       authenticators.first.destroy
       flash[:notice] = I18n.t('two_factor_authenticators.successfully_deleted')

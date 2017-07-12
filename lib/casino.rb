@@ -35,7 +35,7 @@ module CASino
     service_ticket: {
       lifetime_unconsumed: 300,
       lifetime_consumed: 86400,
-      single_sign_out_notification: {
+      single_casino_sign_out_notification: {
         timeout: 5
       }
     },

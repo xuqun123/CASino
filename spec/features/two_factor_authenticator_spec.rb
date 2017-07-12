@@ -7,7 +7,7 @@ describe 'TwoFactorAuthenticator' do
 
   context 'when logged in' do
     before do
-      sign_in
+      casino_sign_in
     end
 
     context 'with two-factor authentication enabled' do

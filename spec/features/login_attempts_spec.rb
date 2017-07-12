@@ -12,7 +12,7 @@ describe 'Session overview' do
     end
 
     before do
-      sign_in
+      casino_sign_in
       login_attempt.touch
       visit login_attempts_path
     end

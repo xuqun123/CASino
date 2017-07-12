@@ -4,7 +4,7 @@ class CASino::AuthTokensController < CASino::ApplicationController
   def login
     validation_result = validation_service.validation_result
     return redirect_to_login unless validation_result
-    sign_in(validation_result)
+    casino_sign_in(validation_result)
   end
 
   private

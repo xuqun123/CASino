@@ -8,13 +8,13 @@ describe 'Login' do
   context 'with two-factor authentication enabled' do
     before do
       in_browser(:other) do
-        sign_in
+        casino_sign_in
         @totp = enable_two_factor_authentication
       end
     end
 
     context 'with valid username and password' do
-      before { sign_in }
+      before { casino_sign_in }
 
       it { should_not have_button('Login') }
       it { should have_button('Continue') }
@@ -45,7 +45,7 @@ describe 'Login' do
 
   context 'with two-factor authentication disabled' do
     context 'with valid username and password' do
-      before { sign_in }
+      before { casino_sign_in }
 
       it { should_not have_button('Login') }
       its(:current_path) { should == sessions_path }
@@ -53,14 +53,14 @@ describe 'Login' do
   end
 
   context 'with invalid username' do
-    before { sign_in username: 'lalala', password: 'foobar123' }
+    before { casino_sign_in username: 'lalala', password: 'foobar123' }
 
     it { should have_button('Login') }
     it { should have_text('Incorrect username or password') }
   end
 
   context 'with blank password' do
-    before { sign_in password: '' }
+    before { casino_sign_in password: '' }
 
     it { should have_button('Login') }
     it { should have_text('Incorrect username or password') }

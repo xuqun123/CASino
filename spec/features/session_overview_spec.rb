@@ -12,7 +12,7 @@ describe 'Session overview' do
     end
 
     before do
-      sign_in
+      casino_sign_in
       login_attempt.touch
       visit sessions_path
     end
@@ -34,7 +34,7 @@ describe 'Session overview' do
     context 'when other sessions exist' do
       before do
         in_browser(:other) do
-          sign_in
+          casino_sign_in
         end
         visit sessions_path
       end
@@ -44,7 +44,7 @@ describe 'Session overview' do
     context 'with two-factor authentication disabled' do
       before do
         in_browser(:other) do
-          sign_in
+          casino_sign_in
         end
         visit sessions_path
       end

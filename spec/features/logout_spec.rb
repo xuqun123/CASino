@@ -7,7 +7,7 @@ describe 'Logout' do
 
   context 'when logged in' do
     before do
-      sign_in
+      casino_sign_in
       click_link 'Logout'
     end
 

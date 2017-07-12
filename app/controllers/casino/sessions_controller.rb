@@ -9,9 +9,9 @@ class CASino::SessionsController < CASino::ApplicationController
   before_action :ensure_signed_in, only: [:index, :destroy]
 
   def index
-    @ticket_granting_tickets = current_user.ticket_granting_tickets.active
-    @two_factor_authenticators = current_user.two_factor_authenticators.active
-    @login_attempts = current_user.login_attempts.order(created_at: :desc).first(5)
+    @ticket_granting_tickets = casino_current_user.ticket_granting_tickets.active
+    @two_factor_authenticators = casino_current_user.two_factor_authenticators.active
+    @login_attempts = casino_current_user.login_attempts.order(created_at: :desc).first(5)
   end
 
   def new
@@ -26,18 +26,18 @@ class CASino::SessionsController < CASino::ApplicationController
       log_failed_login params[:username]
       show_login_error I18n.t('login_credential_acceptor.invalid_login_credentials')
     else
-      sign_in(validation_result, long_term: params[:rememberMe], credentials_supplied: true)
+      casino_sign_in(validation_result, long_term: params[:rememberMe], credentials_supplied: true)
     end
   end
 
   def destroy
-    tickets = current_user.ticket_granting_tickets.where(id: params[:id])
+    tickets = casino_current_user.ticket_granting_tickets.where(id: params[:id])
     tickets.first.destroy if tickets.any?
     redirect_to sessions_path
   end
 
   def destroy_others
-    current_user
+    casino_current_user
       .ticket_granting_tickets
       .where('id != ?', current_ticket_granting_ticket.id)
       .destroy_all if signed_in?
@@ -45,7 +45,7 @@ class CASino::SessionsController < CASino::ApplicationController
   end
 
   def logout
-    sign_out
+    casino_sign_out
     @url = params[:url]
     if params[:service].present? && service_allowed?(params[:service])
       redirect_to params[:service], status: :see_other

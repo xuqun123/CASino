@@ -17,7 +17,7 @@ module CASino::SessionsHelper
     end
   end
 
-  def current_user
+  def casino_current_user
     tgt = current_ticket_granting_ticket
     return nil if tgt.nil?
     tgt.user
@@ -31,11 +31,11 @@ module CASino::SessionsHelper
     !current_ticket_granting_ticket.nil?
   end
 
-  def sign_in(authentication_result, options = {})
+  def casino_sign_in(authentication_result, options = {})
     tgt = acquire_ticket_granting_ticket(authentication_result, request.user_agent, request.remote_ip, options)
     create_login_attempt(tgt.user, true)
     set_tgt_cookie(tgt)
-    handle_signed_in(tgt, options)
+    handle_signed_in(tgt, options) unless options.present? && options[:service_signed_in] == false    
   end
 
   def set_tgt_cookie(tgt)
@@ -46,7 +46,7 @@ module CASino::SessionsHelper
     end
   end
 
-  def sign_out
+  def casino_sign_out
     remove_ticket_granting_ticket(cookies[:tgt], request.user_agent)
     cookies.delete :tgt
   end

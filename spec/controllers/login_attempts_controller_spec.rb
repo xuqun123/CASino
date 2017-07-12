@@ -12,7 +12,7 @@ describe CASino::LoginAttemptsController do
       end
 
       before do
-        sign_in(ticket_granting_ticket)
+        casino_sign_in(ticket_granting_ticket)
         login_attempt.touch
         FactoryGirl.create :login_attempt
       end
