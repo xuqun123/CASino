@@ -35,7 +35,10 @@ module CASino::SessionsHelper
     tgt = acquire_ticket_granting_ticket(authentication_result, request.user_agent, request.remote_ip, options)
     create_login_attempt(tgt.user, true)
     set_tgt_cookie(tgt)
-    handle_signed_in(tgt, options) unless options.present? && options[:service_signed_in] == false    
+    handle_signed_in(tgt, options) unless options.present? && options[:service_signed_in] == false
+    if app_user = User.find_by(email: tgt.user.try(:username))
+      sign_in app_user
+    end
   end
 
   def set_tgt_cookie(tgt)
