@@ -81,7 +81,7 @@ module CASino::SessionsHelper
           Rails.logger.warn "Service #{params[:service]} not valid: #{e}"
         end
       end
-      redirect_to sessions_path, status: :see_other
+      redirect_to '/en', status: :see_other
     end
   end
 
