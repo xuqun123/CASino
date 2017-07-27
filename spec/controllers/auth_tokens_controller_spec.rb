@@ -68,7 +68,7 @@ describe CASino::AuthTokensController do
 
       it 'redirects to the session overview' do
         get :login, request_options
-        response.should redirect_to(sessions_path)
+        response.should redirect_to('/en')
       end
     end
   end

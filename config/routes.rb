@@ -23,6 +23,10 @@ CASino::Engine.routes.draw do
 
   root to: redirect('login')
 
+  if Rails.env.test?
+    get '/en' => 'sessions#index'
+  end
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

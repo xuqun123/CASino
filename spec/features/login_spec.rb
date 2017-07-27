@@ -28,7 +28,7 @@ describe 'Login' do
 
         it { should_not have_button('Login') }
         it { should_not have_button('Continue') }
-        its(:current_path) { should == sessions_path }
+        its(:current_path) { should == "/en" }
       end
 
       context 'when filling in an incorrect otp' do
@@ -48,7 +48,7 @@ describe 'Login' do
       before { casino_sign_in }
 
       it { should_not have_button('Login') }
-      its(:current_path) { should == sessions_path }
+      its(:current_path) { should == "/en" }
     end
   end
 

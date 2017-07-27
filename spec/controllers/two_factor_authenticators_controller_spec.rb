@@ -12,7 +12,7 @@ describe CASino::TwoFactorAuthenticatorsController do
       let(:user_agent) { ticket_granting_ticket.user_agent }
 
       before(:each) do
-        casino_sign_in(ticket_granting_ticket)
+        sign_in(ticket_granting_ticket)
       end
 
       it 'creates exactly one authenticator' do
@@ -67,7 +67,7 @@ describe CASino::TwoFactorAuthenticatorsController do
       let(:params) { { otp: otp, id: id } }
 
       before(:each) do
-        casino_sign_in(ticket_granting_ticket)
+        sign_in(ticket_granting_ticket)
       end
 
       context 'with an invalid authenticator' do
@@ -189,7 +189,7 @@ describe CASino::TwoFactorAuthenticatorsController do
       let(:params) { { id: two_factor_authenticator.id } }
 
       before(:each) do
-        casino_sign_in(ticket_granting_ticket)
+        sign_in(ticket_granting_ticket)
       end
 
       context 'with a valid two-factor authenticator' do

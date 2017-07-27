@@ -59,7 +59,7 @@ describe CASino::SessionsController do
       let(:ticket_granting_ticket) { FactoryGirl.create :ticket_granting_ticket }
 
       before(:each) do
-        casino_sign_in(ticket_granting_ticket)
+        sign_in(ticket_granting_ticket)
       end
 
       context 'when two-factor authentication is pending' do
@@ -127,14 +127,14 @@ describe CASino::SessionsController do
 
         it 'redirects to the session overview' do
           get :new, params
-          response.should redirect_to(sessions_path)
+          response.should redirect_to("/en")
         end
       end
 
       context 'without a service' do
         it 'redirects to the session overview' do
           get :new, params
-          response.should redirect_to(sessions_path)
+          response.should redirect_to("/en")
         end
 
         it 'does not generate a service ticket' do
@@ -300,7 +300,7 @@ describe CASino::SessionsController do
 
           it 'redirects to the session overview' do
             post :create, params
-            response.should redirect_to(sessions_path)
+            response.should redirect_to("/en")
           end
 
           it 'generates a ticket-granting ticket' do
@@ -460,7 +460,7 @@ describe CASino::SessionsController do
       let(:ticket_granting_ticket) { FactoryGirl.create :ticket_granting_ticket }
 
       before(:each) do
-        casino_sign_in(ticket_granting_ticket)
+        sign_in(ticket_granting_ticket)
       end
 
       it 'deletes the ticket-granting ticket' do
@@ -522,7 +522,7 @@ describe CASino::SessionsController do
   describe 'GET "index"' do
     context 'with an existing ticket-granting ticket' do
       before(:each) do
-        casino_sign_in(ticket_granting_ticket)
+        sign_in(ticket_granting_ticket)
       end
 
       describe 'two-factor authenticator settings' do
@@ -591,7 +591,7 @@ describe CASino::SessionsController do
         end
 
         before do
-          casino_sign_in(ticket_granting_ticket)
+          sign_in(ticket_granting_ticket)
 
           login_attempts
         end
@@ -617,7 +617,7 @@ describe CASino::SessionsController do
     let(:user) { owner_ticket_granting_ticket.user }
 
     before(:each) do
-      casino_sign_in(owner_ticket_granting_ticket)
+      sign_in(owner_ticket_granting_ticket)
     end
 
     context 'with an existing ticket-granting ticket' do
@@ -685,7 +685,7 @@ describe CASino::SessionsController do
       let!(:ticket_granting_ticket) { FactoryGirl.create :ticket_granting_ticket, user: user }
 
       before(:each) do
-        casino_sign_in(ticket_granting_ticket)
+        sign_in(ticket_granting_ticket)
       end
 
       it 'deletes all other ticket-granting tickets' do
