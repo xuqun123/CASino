@@ -37,7 +37,7 @@ module CASino::SessionsHelper
     set_tgt_cookie(tgt)
     handle_signed_in(tgt, options) unless options.present? && options[:service_signed_in] == false
     if  Object.const_defined?('User') && app_user = User.find_by(email: tgt.user.try(:username))
-      sign_in app_user
+      sign_in app_user if self.respond_to?(:sign_in)
     end
   end
 
