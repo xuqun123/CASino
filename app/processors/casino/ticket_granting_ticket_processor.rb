@@ -50,7 +50,7 @@ module CASino::TicketGrantingTicketProcessor
     tgt = find_valid_ticket_granting_ticket(ticket_granting_ticket, user_agent)
     unless tgt.nil?
       if Object.const_defined?('User') && app_user = User.find_by(email: tgt.user.try(:username))
-        sign_out app_user
+        sign_out app_user if self.respond_to?(:sign_out)
       end
       tgt.destroy
     end    
