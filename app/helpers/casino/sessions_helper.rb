@@ -52,6 +52,8 @@ module CASino::SessionsHelper
   def casino_sign_out
     remove_ticket_granting_ticket(cookies[:tgt], request.user_agent)
     cookies.delete :tgt
+    cookies.delete :userID if cookies['userID'].present?
+    cookies.delete :accessToken if cookies['accessToken'].present?
   end
 
   def log_failed_login(username)
