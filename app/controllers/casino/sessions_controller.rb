@@ -48,7 +48,16 @@ class CASino::SessionsController < CASino::ApplicationController
     casino_sign_out
     @url = params[:url]
     if params[:service].present? && service_allowed?(params[:service])
-      redirect_to params[:service], status: :see_other
+      # redirect_to params[:service], status: :see_other
+      cookies[:service] = {
+         :value => params[:service]
+      }
+
+      if Rails.env.production?
+        redirect_to 'https://app.sweat.com/logout', status: :see_other
+      else
+        redirect_to 'https://kaylaweb.pixelforcesystems.com.au/logout', status: :see_other
+      end
     end
   end
 

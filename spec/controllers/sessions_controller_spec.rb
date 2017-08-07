@@ -471,6 +471,7 @@ describe CASino::SessionsController do
       it 'renders the logout template' do
         get :logout, params
         response.should render_template(:logout)
+        cookies[:service].should eq nil        
       end
 
       context 'with an URL' do
@@ -479,6 +480,7 @@ describe CASino::SessionsController do
         it 'assigns the URL' do
           get :logout, params
           assigns(:url).should == url
+          cookies[:service].should eq nil
         end
       end
 
@@ -489,7 +491,9 @@ describe CASino::SessionsController do
         context 'when whitelisted' do
           it 'redirects to the service' do
             get :logout, params
-            response.should redirect_to(url)
+            # response.should redirect_to(url)
+            cookies[:service].should eq 'http://www.example.org'
+            response.should redirect_to "https://kaylaweb.pixelforcesystems.com.au/logout"
           end
         end
 
