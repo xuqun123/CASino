@@ -52,12 +52,12 @@ class CASino::SessionsController < CASino::ApplicationController
       cookies[:service] = {
          :value => params[:service]
       }
-
-      if Rails.env.production?
-        redirect_to 'https://app.sweat.com/logout', status: :see_other
-      else
-        redirect_to 'https://kaylaweb.pixelforcesystems.com.au/logout', status: :see_other
-      end
+    end
+    
+    if Rails.env.production?
+      redirect_to 'https://app.sweat.com/logout', status: :see_other
+    else
+      redirect_to 'https://kaylaweb.pixelforcesystems.com.au/logout', status: :see_other
     end
   end
 
