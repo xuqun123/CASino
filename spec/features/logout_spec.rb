@@ -8,10 +8,9 @@ describe 'Logout' do
   context 'when logged in' do
     before do
       casino_sign_in
-      # click_link 'Logout'
+      click_link 'Logout'
     end
 
-    # it { should have_content('logged out') }
-    it { should have_content('logged in') }
+    it { should have_content('logged out') }
   end
 end

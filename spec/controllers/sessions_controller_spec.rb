@@ -470,9 +470,7 @@ describe CASino::SessionsController do
 
       it 'renders the logout template' do
         get :logout, params
-        # response.should render_template(:logout)
-        response.should redirect_to "https://kaylaweb.pixelforcesystems.com.au/logout"
-        cookies[:service].should eq nil        
+        response.should render_template(:logout)
       end
 
       context 'with an URL' do
@@ -492,9 +490,7 @@ describe CASino::SessionsController do
         context 'when whitelisted' do
           it 'redirects to the service' do
             get :logout, params
-            # response.should redirect_to(url)
-            cookies[:service].should eq 'http://www.example.org'
-            response.should redirect_to "https://kaylaweb.pixelforcesystems.com.au/logout"
+            response.should redirect_to(url)
           end
         end
 
@@ -505,8 +501,7 @@ describe CASino::SessionsController do
 
           it 'renders the logout template' do
             get :logout, params
-            # response.should render_template(:logout)
-            response.should redirect_to "https://kaylaweb.pixelforcesystems.com.au/logout"
+            response.should render_template(:logout)
           end
 
           it 'does not assign the URL' do
@@ -520,8 +515,7 @@ describe CASino::SessionsController do
     context 'without a ticket-granting ticket' do
       it 'renders the logout template' do
         get :logout, params
-        # response.should render_template(:logout)
-        response.should redirect_to "https://kaylaweb.pixelforcesystems.com.au/logout"        
+        response.should render_template(:logout)
       end
     end
   end
