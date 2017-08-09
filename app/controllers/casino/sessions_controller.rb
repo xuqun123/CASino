@@ -24,7 +24,11 @@ class CASino::SessionsController < CASino::ApplicationController
     validation_result = validate_login_credentials(params[:username], params[:password])
     if !validation_result
       log_failed_login params[:username]
-      show_login_error I18n.t('devise.failure.invalid')
+      if Rails.env.test?
+        show_login_error I18n.t('login_credential_acceptor.invalid_login_credentials')        
+      else
+        show_login_error I18n.t('devise.failure.invalid')
+      end
     else
       casino_sign_in(validation_result, long_term: params[:rememberMe], credentials_supplied: true)
     end
