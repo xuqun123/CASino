@@ -24,7 +24,7 @@ class CASino::SessionsController < CASino::ApplicationController
     validation_result = validate_login_credentials(params[:username], params[:password])
     if !validation_result
       log_failed_login params[:username]
-      show_login_error I18n.t('login_credential_acceptor.invalid_login_credentials')
+      show_login_error I18n.t('devise.failure.invalid')
     else
       casino_sign_in(validation_result, long_term: params[:rememberMe], credentials_supplied: true)
     end
@@ -54,7 +54,7 @@ class CASino::SessionsController < CASino::ApplicationController
 
   def validate_otp
     validation_result = validate_one_time_password(params[:otp], @ticket_granting_ticket.user.active_two_factor_authenticator)
-    return flash.now[:error] = I18n.t('validate_otp.invalid_otp') unless validation_result.success?
+    return flash.now[:alert] = I18n.t('validate_otp.invalid_otp') unless validation_result.success?
     @ticket_granting_ticket.update_attribute(:awaiting_two_factor_authentication, false)
     set_tgt_cookie(@ticket_granting_ticket)
     handle_signed_in(@ticket_granting_ticket)
@@ -63,7 +63,7 @@ class CASino::SessionsController < CASino::ApplicationController
   private
 
   def show_login_error(message)
-    flash.now[:error] = message
+    flash.now[:alert] = message
     render :new, status: :forbidden
   end
 
